@@ -1,0 +1,130 @@
+<p-table
+  [loading]="store.orders.loading"
+  [value]="store.orders.value"
+  stripedRows
+>
+  <ng-template #caption>
+    <div class="list-header">
+      <span class="list-title">Orders</span>
+      <a routerLink="/orders/new" class="p-button font-bold">
+        <i class="pi pi-plus"></i> Order
+      </a>
+    </div>
+  </ng-template>
+  <ng-template #header>
+    <tr>
+      <th style="text-align: center">ID</th>
+      <th style="width: 20%">Order no</th>
+      <th style="width: 25%">
+        Description
+        <p-columnFilter
+          field="description"
+          display="menu"
+          showOperator="false"
+          showMatchModes="false"
+          showAddButton="false"
+          showClearButton="false"
+          showApplyButton="false"
+          showButtons="false"
+        >
+          <ng-template pTemplate="filter">
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="filter.description"
+              placeholder="Search by description"
+            />
+          </ng-template>
+          <ng-template #footer>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                margin-top: -0.75rem;
+              "
+            >
+              <p-button
+                label="Clear"
+                styleClass="p-button-outlined"
+                (onClick)="clearFilter('description')"
+              ></p-button>
+              <p-button label="Apply" (onClick)="applyFilter()"></p-button>
+            </div>
+          </ng-template>
+        </p-columnFilter>
+      </th>
+      <th style="width: 15%">Amount</th>
+      <th style="width: 20%">Delivery date</th>
+      <th style="width: 20%">
+        Delivery address
+        <p-columnFilter
+          field="country"
+          matchMode="equals"
+          display="menu"
+          showOperator="false"
+          showMatchModes="false"
+          showAddButton="false"
+          showClearButton="false"
+          showApplyButton="false"
+          showButtons="false"
+        >
+          <ng-template pTemplate="filter">
+            <p-select
+              [(ngModel)]="filter.country"
+              [loading]="store.countries.loading"
+              [options]="store.countries.value | countriesToOptions"
+              [editable]="true"
+              placeholder="Select country"
+            />
+          </ng-template>
+          <ng-template #footer>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                margin-top: -0.75rem;
+              "
+            >
+              <p-button
+                label="Clear"
+                styleClass="p-button-outlined"
+                (onClick)="clearFilter('country')"
+              ></p-button>
+              <p-button label="Apply" (onClick)="applyFilter()"></p-button>
+            </div>
+          </ng-template>
+        </p-columnFilter>
+      </th>
+    </tr>
+  </ng-template>
+  <tbody>
+    <tr>
+      jou
+    </tr>
+  </tbody>
+  <ng-template #body let-order>
+    <tr>
+      <td>
+        <p-button
+          icon="pi pi-copy"
+          pTooltip="Copy Order ID"
+          tooltipPosition="bottom"
+          (click)="copyId(order.id)"
+        />
+      </td>
+      <td>
+        <b>{{ order.externalId }}</b>
+      </td>
+      <td style="white-space: pre-wrap">{{ order.description }}</td>
+      <td>{{ order.amount }} {{ order.currency }}</td>
+      <td>{{ order.dueDate | date: "medium" }}</td>
+      <td>{{ order.street }}, {{ order.town }}, {{ order.country }}</td>
+    </tr>
+  </ng-template>
+  <ng-template #emptymessage>
+    <tr>
+      <td class="no-results" colspan="6">No results</td>
+    </tr>
+  </ng-template>
+</p-table>
+<router-outlet />

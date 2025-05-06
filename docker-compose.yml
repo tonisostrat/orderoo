@@ -1,0 +1,56 @@
+services:
+  db:
+    image: postgres:17-alpine
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+
+  backend:
+    build:
+      context: ./backend
+      target: dev
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    develop:
+      watch:
+        - action: sync
+          path: ./backend/src
+          target: /app/src
+        - action: sync
+          path: backend/migrations
+          target: /app/migrations
+        - action: sync
+          path: backend/package.json
+          target: /app/package.json
+        - action: sync+restart
+          path: backend/package-lock.json
+          target: /app/package-lock.json
+
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    ports:
+      - "4200:4200"
+    env_file:
+      - .env
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend/src
+          target: /app/src
+        - action: sync
+          path: ./frontend/public
+          target: /app/public
+        - action: sync
+          path: frontend/package.json
+          target: /app/package.json
+        - action: sync+restart
+          path: frontend/package-lock.json
+          target: /app/package-lock.json

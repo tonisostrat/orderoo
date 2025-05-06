@@ -1,0 +1,19 @@
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & .list-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+.no-results {
+  text-align: center;
+  font-weight: 600;
+}
+
+.p-button {
+  text-decoration: none;
+}

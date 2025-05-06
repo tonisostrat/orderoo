@@ -1,0 +1,114 @@
+<p-drawer [visible]="true" position="right" (onHide)="handleClose()">
+  <ng-template #header>
+    <h2>{{ title() }}</h2>
+  </ng-template>
+  <ng-template #content>
+    <form class="order-form">
+      <p-ifta-label>
+        <input
+          pInputText
+          id="orderNo"
+          class="field"
+          name="orderNo"
+          [(ngModel)]="store.newOrder.value.externalId"
+        />
+        <label for="orderNo">Order no</label>
+      </p-ifta-label>
+
+      <div class="field-group">
+        <p-ifta-label>
+          <p-input-number
+            id="amount"
+            class="field"
+            mode="decimal"
+            [minFractionDigits]="2"
+            [maxFractionDigits]="18"
+            name="amount"
+            [(ngModel)]="store.newOrder.value.amount"
+          />
+          <label for="amount">Amount</label>
+        </p-ifta-label>
+
+        <p-ifta-label>
+          <p-select
+            id="currency"
+            class="field"
+            [loading]="store.currencies.loading"
+            [options]="store.currencies.value"
+            [editable]="true"
+            name="currency"
+            [(ngModel)]="store.newOrder.value.currency"
+            placeholder="Select currency"
+          />
+          <label for="currency">Currency</label>
+        </p-ifta-label>
+      </div>
+
+      <p-ifta-label>
+        <p-date-picker
+          id="dueDate"
+          class="field"
+          [showTime]="true"
+          [hourFormat]="'24'"
+          name="dueDate"
+          [(ngModel)]="store.newOrder.value.dueDate"
+        />
+        <label for="dueDate">Delivery date</label>
+      </p-ifta-label>
+
+      <p-ifta-label>
+        <textarea
+          id="description"
+          class="field"
+          rows="5"
+          pTextarea
+          name="description"
+          [(ngModel)]="store.newOrder.value.description"
+        ></textarea>
+        <label for="description">Description</label>
+      </p-ifta-label>
+
+      <p-ifta-label>
+        <input
+          pInputText
+          id="street"
+          class="field"
+          name="street"
+          [(ngModel)]="store.newOrder.value.street"
+        />
+        <label for="street">Street</label>
+      </p-ifta-label>
+
+      <p-ifta-label>
+        <input
+          pInputText
+          id="town"
+          class="field"
+          name="town"
+          [(ngModel)]="store.newOrder.value.town"
+        />
+        <label for="town">Town</label>
+      </p-ifta-label>
+
+      <p-ifta-label>
+        <p-select
+          id="country"
+          class="field"
+          [loading]="store.countries.loading"
+          name="country"
+          [(ngModel)]="store.newOrder.value.country"
+          [options]="store.countries.value | countriesToOptions"
+          [editable]="true"
+          placeholder="Select country"
+        />
+        <label for="country">Country</label>
+      </p-ifta-label>
+    </form>
+  </ng-template>
+  <ng-template #footer>
+    <p-button label="Save" (click)="handleSave()" />
+    <ng-container *ngIf="store.orderSaveError">
+      <p-message severity="error">{{ store.orderSaveError }}</p-message>
+    </ng-container>
+  </ng-template>
+</p-drawer>

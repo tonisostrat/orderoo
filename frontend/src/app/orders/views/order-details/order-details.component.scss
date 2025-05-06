@@ -1,0 +1,37 @@
+::ng-deep {
+  .p-drawer {
+    min-width: 40rem;
+  }
+
+  .p-drawer-header {
+    border-bottom: 1px solid var(--p-inputtext-border-color);
+  }
+
+  .p-drawer-footer {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    border-top: 1px solid var(--p-inputtext-border-color);
+  }
+}
+
+.order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 0;
+
+  .field {
+    width: 100%;
+  }
+
+  .field-group {
+    display: flex;
+    gap: 1rem;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 10rem;
+  }
+}
